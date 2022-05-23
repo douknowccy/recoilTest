@@ -4,6 +4,7 @@ import {atom, useRecoilValue, selector, useRecoilValueLoadable} from 'recoil'
 import produce from 'immer'
 import Test from './Test'
 import axios from 'axios'
+import {Suspense} from 'react'
 interface LanguageAtomType {
     locale: LOCALES
     other: string
@@ -46,8 +47,8 @@ const myAtom = atom({
 })
 export const App = () => {
     const {locale} = useRecoilValue(LanguageAtom)
-    const inti = useRecoilValueLoadable(myAtom)
-    if (inti.state === 'loading') return <div>loading...</div>
+    useRecoilValue(myAtom)
+
     return (
         <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={LOCALES.ENGLISH}>
             <Test />
